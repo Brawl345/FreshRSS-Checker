@@ -51,7 +51,11 @@ async function checkFeeds() {
 
     var unread_item_ids = body.unread_item_ids.split(",");
     browser.browserAction.setBadgeBackgroundColor({'color': 'blue'})
-    browser.browserAction.setBadgeText({'text': unread_item_ids.length.toString()})
+    if (unread_item_ids.length === 1 && unread_item_ids[0] === "") {
+        browser.browserAction.setBadgeText({'text': ""})
+    } else {
+        browser.browserAction.setBadgeText({'text': unread_item_ids.length.toString()})
+    }
 }
 
 async function calculateDelay(interval) {
