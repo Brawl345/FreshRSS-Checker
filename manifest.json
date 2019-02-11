@@ -7,7 +7,7 @@
   "manifest_version": 2,
   "name": "FreshRSS Checker",
   "description": "Shows unread count for FreshRSS",
-  "version": "1.0.0",
+  "version": "1.0.1",
 
   "background": {
     "scripts": ["background.js", "md5.min.js"]
