@@ -1,17 +1,16 @@
 {
-
   "applications": {
       "gecko": {
-          "id": "miniflux-checker@addons.mozilla.org"
+          "id": "freshrss-checker@addons.mozilla.org"
       }
   },
   "manifest_version": 2,
-  "name": "Miniflux Checker",
-  "description": "Miniflux checker",
-  "version": "1.0.1",
+  "name": "FreshRSS Checker",
+  "description": "Shows unread count for FreshRSS",
+  "version": "1.0.0",
 
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["background.js", "md5.min.js"]
   },
  
   "browser_action": {

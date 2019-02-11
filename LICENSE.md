@@ -1,4 +1,5 @@
-Copyright (C) 2018 by wsha <wsha.code@gmail.com>
+Copyright (C) 2019 by Brawl345 <https://github.com/Brawl345>
+Original code Copyright (C) 2018 by wsha <wsha.code@gmail.com>
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted.
 

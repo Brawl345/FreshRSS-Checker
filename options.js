@@ -1,5 +1,4 @@
-var optionNames = ['interval', 'lastEntry', 'maxNotifications',
-    'notifications', 'password', 'url', 'username', 'useIcons']
+var optionNames = ['interval','password', 'url', 'username']
 
 function saveOptions(e) {
     e.preventDefault()
@@ -33,21 +32,5 @@ async function restoreOptions() {
     }
 }
 
-function updateID(changes) {
-    if (changes.hasOwnProperty('lastEntry')) {
-        var element = document.querySelector('#lastEntry')
-        element.value = changes.lastEntry.newValue
-    }
-}
-
-function resetID(e) {
-    e.preventDefault()
-    browser.storage.local.set({'lastEntry': '0'})
-    var element = document.querySelector('#lastEntry')
-    element.value = '0'
-}
-
 document.addEventListener('DOMContentLoaded', restoreOptions)
 document.querySelector('#save').addEventListener('submit', saveOptions)
-document.querySelector('#reset-id').addEventListener('submit', resetID)
-browser.storage.onChanged.addListener(updateID)

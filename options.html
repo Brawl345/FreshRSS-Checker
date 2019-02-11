@@ -9,7 +9,7 @@
     <table>
       <tr>
         <td>
-            <label>Miniflux URL </label> 
+            <label>FreshRSS URL </label> 
         </td>
         <td>
           <input type="url" id="url" ></label>
@@ -18,7 +18,7 @@
 
       <tr>
         <td>
-            <label>Miniflux username </label> 
+            <label>FreshRSS username </label> 
         </td>
         <td>
           <input type="text" id="username" ></label>
@@ -27,7 +27,7 @@
 
       <tr>
         <td>
-            <label>Miniflux password </label> 
+            <label>FreshRSS API password </label> 
         </td>
         <td>
           <input type="password" id="password" ></label>
@@ -43,53 +43,12 @@
         </td>
       </tr>
 
-      <tr>
-        <td>
-            <label>Show desktop notifications </label> 
-        </td>
-        <td>
-          <input type="checkbox" id="notifications" ></label>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-            <label>Max simultaneous notifications</label> 
-        </td>
-        <td>
-          <input type="number" min="1" id="maxNotifications" ></label>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-            <label>Use feed icons in notifications </label> 
-        </td>
-        <td>
-          <input type="checkbox" id="useIcons" ></label>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-            <label>Latest item ID </label> 
-        </td>
-        <td>
-          <input type="number" min="0" id="lastEntry" readonly></label>
-        </td>
-      </tr>
-
     </table>
     <table>
       <tr>
         <td>
           <form id="save">
               <button type="submit">Save settings</button>
-          </form>
-        </td>
-        <td>
-          <form id="reset-id">
-              <button type="submit">Reset latest item ID</button>
           </form>
         </td>
       </tr>
