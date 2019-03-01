@@ -1,6 +1,6 @@
 var optionNames = ['interval','password', 'url', 'username']
 
-function saveOptions(e) {
+async function saveOptions(e) {
     e.preventDefault()
     var settings = {}
     var element
@@ -12,10 +12,19 @@ function saveOptions(e) {
             settings[setting] = element.value
         }
     }
-    browser.storage.local.set(settings)
-
+    
+    // Ask for permission
+    if (settings.url !== "") {
+        settings.url = settings.url.replace(/\/?$/, '/');
+        var granted = await requestHostPermission(settings.url);
+        if (!granted) {
+          delete settings.url;
+        }
+    }
+    
+    browser.storage.local.set(settings);
     var background = browser.extension.getBackgroundPage()
-    background.setupAlarm()
+    background.setupAlarm();
 }
 
 async function restoreOptions() {
@@ -32,5 +41,17 @@ async function restoreOptions() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', restoreOptions)
-document.querySelector('#save').addEventListener('submit', saveOptions)
+function requestHostPermission(url) {
+    return browser.permissions.request({origins: [url]});
+}
+
+async function removeHostPermission() {
+    var all_permissions = await browser.permissions.getAll();
+    if (all_permissions.origins.length > 0) {
+        browser.permissions.remove({origins: [...all_permissions.origins]});
+    }
+}
+
+document.addEventListener('DOMContentLoaded', restoreOptions);
+document.querySelector('#save').addEventListener('submit', saveOptions);
+document.querySelector('#reset-host').addEventListener('submit', removeHostPermission);

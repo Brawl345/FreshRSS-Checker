@@ -39,16 +39,20 @@
             <label>Update interval (minutes) </label> 
         </td>
         <td>
-          <input type="number" min="0.1" step="any" id="interval" ></label>
+          <input type="number" min="1" step="1" id="interval" ></label>
         </td>
       </tr>
 
     </table>
+    
     <table>
       <tr>
         <td>
           <form id="save">
-              <button type="submit">Save settings</button>
+              <button class="browser-style" type="submit">Save settings</button>
+          </form>
+          <form id="reset-host">
+              <button class="browser-style" type="submit">Reset host permissions</button>
           </form>
         </td>
       </tr>
