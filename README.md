@@ -1,20 +1,23 @@
 FreshRSS Checker
-================
-FreshRSS Checker is a Firefox WebExtension that tracks unread items in a [FreshRSS](https://freshrss.org) instance. Specifically, it does the following:
-
-* Provides a toolbar icon that indicates the number of unread feed items
+=============
+FreshRSS Checker is a WebExtension that tracks unread items in a [FreshRSS](https://freshrss.org) instance and shows a badge with the number of unread articles.
 
 ## Setup
-1. Install the extension from the [releases page](https://github.com/Brawl345/FreshRSS-Checker/releases).
-2. Open the extension's preferences page from Addons manager and set the FeedRSS URL, username, and API password (not your regular password, remember to enable mobile API access). 
+1. Install the extension
+2. Open the extension's preferences page from add-ons manager and set the FreshRSS base URL, username, and API password (not your regular password, remember to enable mobile API access).
 3. Place the toolbar icon in a visible location if you want to see the number of unread items.
 
+## Build
+
+1. Clone
+2. Install dependencies with `npm install`
+3. Run `npm run start:firefox`
+4. Build with `npm run build`
+
+Primary development target is Firefox, Chromium-based browsers are polyfilled.
+
 ## Usage notes
-* Clicking the toolbar icon opens the rss page
+* Clicking the toolbar icon opens your FreshRSS instance
 * Right-clicking it and choosing "Check now" forces the badge to update
 * The time between checks can be set in the preferences.
-* The password is stored in the extension's local storage, effectively in clear text on the file system.
-
-## Credits
-* Based on [Miniflux checker](https://github.com/willsALMANJ/miniflux-checker)
-* Uses [js-md5](https://github.com/emn178/js-md5)
+* The password is stored in the extension's local storage, effectively in clear text on the file system. It's not transmitted over the network, only an MD5 hash of your username plus password is!

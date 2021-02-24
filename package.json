@@ -1,0 +1,27 @@
+{
+  "name": "freshrss-checker",
+  "version": "2.0.0",
+  "description": "Shows unread count for FreshRSS",
+  "repository": {
+    "url": "https://github.com/Brawl345/FreshRSS-Checker"
+  },
+  "scripts": {
+    "build": "web-ext build --overwrite-dest",
+    "start:firefox": "web-ext run --start-url=about:debugging#/runtime/this-firefox",
+    "lint": "web-ext lint"
+  },
+  "keywords": [
+    "browser",
+    "webextension"
+  ],
+  "author": "Brawl345",
+  "license": "Unlicense",
+  "devDependencies": {
+    "@types/firefox-webext-browser": "^82.0.0",
+    "eslint": "^7.20.0",
+    "web-ext": "^5.5.0"
+  },
+  "webExt": {
+    "sourceDir": "./source/"
+  }
+}
