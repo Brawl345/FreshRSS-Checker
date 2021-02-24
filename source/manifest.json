@@ -40,7 +40,7 @@
   ],
   "browser_specific_settings": {
     "gecko": {
-      "id": "freshrss-checker@brawl345.github.com",
+      "id": "freshrss-checker@addons.mozilla.org",
       "strict_min_version": "80.0"
     }
   }
