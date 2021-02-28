@@ -1,4 +1,7 @@
 {
+  "extensionName": {
+    "message": "FreshRSS Checker"
+  },
   "extensionDescription": {
     "message": "Zeigt die Anzahl ungelesener FreshRSS-Artikel"
   },
