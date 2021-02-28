@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>FreshRSS Checker Options</title>
+  <title>__options_title__</title>
 
   <style>
       body {
@@ -48,35 +48,35 @@
   </style>
 </head>
 <body>
-<h1>FreshRSS Checker</h1>
+<h1 id="title">__extensionName__</h1>
 
 <form>
   <label>
-    FreshRSS URL <input type="url" name="url" placeholder="Path to your FreshRSS instance" required />
+    __options_freshRssUrlLabel__ <input type="url" id="url" name="url" placeholder="__options_freshRssUrlPlaceholder__" required />
   </label>
 
   <label>
-    Username <input type="text" name="username" placeholder="FreshRSS username" required />
+    __options_freshRssUsernameLabel__ <input type="text" id="username" name="username" placeholder="__options_freshRssUsernamePlaceholder__" required />
   </label>
 
   <label>
-    API password <input type="password" name="password" placeholder="API password" required />
+    __options_freshRssPasswordLabel__ <input type="password" id="password" name="password" placeholder="__options_freshRssPasswordPlaceholder__" required />
   </label>
 
   <label>
-    Update interval (minutes) <input type="number" min="1" step="1" name="interval" placeholder="Check interval" required />
+    __options_intervalLabel__ <input type="number" id="interval" min="1" step="1" name="interval" placeholder="__options_intervalPlaceholder__" required />
   </label>
 
   <div>
-    <button class="browser-style" type="submit">Save settings</button>
-    <button id="remove-permissions" class="browser-style float-right" type="button">Reset host permissions</button>
+    <button id="save" class="browser-style" type="submit">__options_save__</button>
+    <button id="remove-permissions" class="browser-style float-right" type="button">__options_removePermissions__</button>
     <span id="message">__MSG__</span>
   </div>
 
 </form>
 
-<label for="hosts">FreshRSS checker can currently access the following domains:</label>
-<textarea id="hosts" rows="5" disabled></textarea>
+<label id="hosts-label" for="hosts">__options_hostsLabel__</label>
+<textarea id="hosts" placeholder="__options_hostsPlaceholder__" rows="5" disabled></textarea>
 
 <script type="application/javascript" src="../lib/browser-polyfill.min.js"></script>
 <script type="application/javascript" src="../lib/spark-md5.min.js"></script>

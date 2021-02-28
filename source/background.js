@@ -2,6 +2,11 @@
 
 const freshRssChecker = () => {
 
+  const i18n = {
+    contextMenu_checkNow: browser.i18n.getMessage('contextMenu_checkNow'),
+    badge_error: browser.i18n.getMessage('badge_error')
+  };
+
   const BADGE_COLORS = {
     NORMAL: 'blue',
     WARNING: 'yellow',
@@ -46,12 +51,12 @@ const freshRssChecker = () => {
       const response = await fetch(api_url, { method: 'POST', body: formData });
       body = await response.json();
     } catch (err) {
-      setBadge(BADGE_COLORS.FAILURE, 'ERR');
+      setBadge(BADGE_COLORS.FAILURE, i18n.badge_error);
       return;
     }
 
     if (body.auth === 0) {
-      setBadge(BADGE_COLORS.FAILURE, 'ERR');
+      setBadge(BADGE_COLORS.FAILURE, i18n.badge_error);
       return;
     }
 
@@ -71,7 +76,7 @@ const freshRssChecker = () => {
     await browser.contextMenus.removeAll();
     browser.contextMenus.create({
       id: 'freshrss-checker@brawl345.github.com__browserAction_contextMenu',
-      title: 'Check now',
+      title: i18n.contextMenu_checkNow,
       contexts: ['browser_action'],
       onclick: checkFeeds
     });

@@ -4,9 +4,39 @@
 
 const freshRssCheckerOptions = () => {
 
-  const message = document.getElementById('message');
-  const removePermissionsBtn = document.getElementById('remove-permissions');
-  const hosts = document.getElementById('hosts');
+  const i18n = {
+    title: browser.i18n.getMessage('options_title'),
+    extensionName: browser.i18n.getMessage('extensionName'),
+    urlLabel: browser.i18n.getMessage('options_freshRssUrlLabel'),
+    urlPlaceholder: browser.i18n.getMessage('options_freshRssUrlPlaceholder'),
+    usernameLabel: browser.i18n.getMessage('options_freshRssUsernameLabel'),
+    usernamePlaceholder: browser.i18n.getMessage('options_freshRssUsernamePlaceholder'),
+    passwordLabel: browser.i18n.getMessage('options_freshRssPasswordLabel'),
+    passwordPlaceholder: browser.i18n.getMessage('options_freshRssPasswordPlaceholder'),
+    intervalLabel: browser.i18n.getMessage('options_intervalLabel'),
+    intervalPlaceholder: browser.i18n.getMessage('options_intervalPlaceholder'),
+    save: browser.i18n.getMessage('options_save'),
+    removePermissions: browser.i18n.getMessage('options_removePermissions'),
+    hostsLabel: browser.i18n.getMessage('options_hostsLabel'),
+    hostsPlaceholder: browser.i18n.getMessage('options_hostsPlaceholder'),
+    permissionsCleared: browser.i18n.getMessage('options_permissionsCleared'),
+    permissionNotGranted: browser.i18n.getMessage('options_permissionNotGranted'),
+    saveSuccess: browser.i18n.getMessage('options_saveSuccess'),
+    saveFail: browser.i18n.getMessage('options_saveFail'),
+  };
+
+  const HTML = {
+    title: document.getElementById('title'),
+    url: document.getElementById('url'),
+    username: document.getElementById('username'),
+    password: document.getElementById('password'),
+    interval: document.getElementById('interval'),
+    save: document.getElementById('save'),
+    message: document.getElementById('message'),
+    removePermissionsBtn: document.getElementById('remove-permissions'),
+    hostsLabel: document.getElementById('hosts-label'),
+    hosts: document.getElementById('hosts'),
+  };
 
   const OPTIONS = {
     url: '',
@@ -15,15 +45,34 @@ const freshRssCheckerOptions = () => {
     interval: 5.0,
   };
 
+  const localize = () => {
+    document.title = i18n.title;
+    HTML.title.textContent = i18n.extensionName;
+
+    HTML.url.previousSibling.textContent = i18n.urlLabel;
+    HTML.url.placeholder = i18n.urlPlaceholder;
+    HTML.username.previousSibling.textContent = i18n.usernameLabel;
+    HTML.username.placeholder = i18n.usernamePlaceholder;
+    HTML.password.previousSibling.textContent = i18n.passwordLabel;
+    HTML.password.placeholder = i18n.passwordPlaceholder;
+    HTML.interval.previousSibling.textContent = i18n.intervalLabel;
+    HTML.interval.placeholder = i18n.intervalPlaceholder;
+
+    HTML.save.textContent = i18n.save;
+    HTML.removePermissionsBtn.textContent = i18n.removePermissions;
+    HTML.hostsLabel.textContent = i18n.hostsLabel;
+    HTML.hosts.placeholder = i18n.hostsPlaceholder;
+  };
+
   const clearMessage = () => {
-    message.style.display = 'none';
-    message.className = '';
+    HTML.message.style.display = 'none';
+    HTML.message.className = '';
   };
 
   const setMessage = (variant, text) => {
-    message.textContent = text;
-    message.className = variant;
-    message.style.display = 'block';
+    HTML.message.textContent = text;
+    HTML.message.className = variant;
+    HTML.message.style.display = 'block';
     setTimeout(clearMessage, 2000);
   };
 
@@ -41,11 +90,11 @@ const freshRssCheckerOptions = () => {
       await browser.permissions.remove({ origins: [...all_permissions.origins] });
     }
     await reloadHostsTextField();
-    setMessage('success', ' Permissions cleared! Please remember to re-save your settings.');
+    setMessage('success', i18n.permissionsCleared);
   };
 
   const reloadHostsTextField = async () => {
-    hosts.value = (await browser.permissions.getAll()).origins.join('\n');
+    HTML.hosts.value = (await browser.permissions.getAll()).origins.join('\n');
   };
 
   const saveOptions = async (event) => {
@@ -73,7 +122,7 @@ const freshRssCheckerOptions = () => {
     });
 
     if (!grantedPermission) {
-      setMessage('failure', 'Saving failed because permission was not granted.');
+      setMessage('failure', i18n.permissionNotGranted);
       return;
     }
 
@@ -81,19 +130,20 @@ const freshRssCheckerOptions = () => {
 
     browser.storage.local.set(userOptions)
       .then(() => {
-        setMessage('success', 'Settings saved!');
+        setMessage('success', i18n.saveSuccess);
         reloadHostsTextField();
         browser.runtime.sendMessage('init');
       })
-      .catch(() => setMessage('failure', 'Saving failed.'));
+      .catch(() => setMessage('failure', i18n.saveFail));
   };
 
   return ({
     init: async () => {
+      localize();
       restoreOptions();
       await reloadHostsTextField();
       document.addEventListener('submit', saveOptions);
-      removePermissionsBtn.addEventListener('click', removeHostPermissions);
+      HTML.removePermissionsBtn.addEventListener('click', removeHostPermissions);
     },
   });
 };

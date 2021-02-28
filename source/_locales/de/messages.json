@@ -1,0 +1,56 @@
+{
+  "extensionDescription": {
+    "message": "Zeigt die Anzahl ungelesener FreshRSS-Artikel"
+  },
+  "contextMenu_checkNow": {
+    "message": "Jetzt prüfen"
+  },
+  "options_title": {
+    "message": "FreshRSS Checker Optionen"
+  },
+  "options_freshRssUrlPlaceholder": {
+    "message": "Pfad zur FreshRSS-Instanz"
+  },
+  "options_freshRssUsernameLabel": {
+    "message": "Benutzername"
+  },
+  "options_freshRssUsernamePlaceholder": {
+    "message": "FreshRSS-Benutzername"
+  },
+  "options_freshRssPasswordLabel": {
+    "message": "API-Passwort"
+  },
+  "options_freshRssPasswordPlaceholder": {
+    "message": "API-Passwort"
+  },
+  "options_intervalLabel": {
+    "message": "Prüf-Intervall (in Minuten)"
+  },
+  "options_intervalPlaceholder": {
+    "message": "Prüf-Intervall"
+  },
+  "options_save": {
+    "message": "Einstellungen speichern"
+  },
+  "options_removePermissions": {
+    "message": "Host-Berechtigungen zurücksetzen"
+  },
+  "options_hostsLabel": {
+    "message": "FreshRSS Checker kann zurzeit auf die folgenden Adressen zugreifen:"
+  },
+  "options_hostsPlaceholder": {
+    "message": "FreshRSS Checker kann zurzeit auf keine Adressen zugreifen."
+  },
+  "options_permissionsCleared": {
+    "message": "Hosts-Berechtigungen zurückgesetzt! Bitte denke daran, deine Einstellungen erneut zu speichern."
+  },
+  "options_permissionNotGranted": {
+    "message": "Speichern fehlgeschlagen, da die nötige Berechtigung nicht erteilt wurde."
+  },
+  "options_saveSuccess": {
+    "message": "Einstellungen gespeichert!"
+  },
+  "options_saveFail": {
+    "message": "Speichern fehlgeschlagen"
+  }
+}

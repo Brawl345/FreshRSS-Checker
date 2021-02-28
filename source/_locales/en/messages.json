@@ -1,0 +1,70 @@
+{
+  "extensionName": {
+    "message": "FreshRSS Checker",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Shows unread count for FreshRSS",
+    "description": "Description of the extension."
+  },
+  "contextMenu_checkNow": {
+    "message": "Check now",
+    "description": "Context menu entry"
+  },
+  "badge_error": {
+    "message": "ERR",
+    "description": "Error badge, should be fewer than three characters"
+  },
+  "options_title": {
+    "message": "FreshRSS Checker Options",
+    "description": "Title tag for the options page, normally not shown"
+  },
+  "options_freshRssUrlLabel": {
+    "message": "FreshRSS URL"
+  },
+  "options_freshRssUrlPlaceholder": {
+    "message": "Path to FreshRSS instance"
+  },
+  "options_freshRssUsernameLabel": {
+    "message": "Username"
+  },
+  "options_freshRssUsernamePlaceholder": {
+    "message": "FreshRSS username"
+  },
+  "options_freshRssPasswordLabel": {
+    "message": "API password"
+  },
+  "options_freshRssPasswordPlaceholder": {
+    "message": "API password"
+  },
+  "options_intervalLabel": {
+    "message": "Update interval (minutes)"
+  },
+  "options_intervalPlaceholder": {
+    "message": "Check interval"
+  },
+  "options_save": {
+    "message": "Save settings"
+  },
+  "options_removePermissions": {
+    "message": "Reset host permissions"
+  },
+  "options_hostsLabel": {
+    "message": "FreshRSS Checker can currently access the following addresses:"
+  },
+  "options_hostsPlaceholder": {
+    "message": "FreshRSS Checker can't currently access any addresses."
+  },
+  "options_permissionsCleared": {
+    "message": "Permissions cleared! Please remember to re-save your settings."
+  },
+  "options_permissionNotGranted": {
+    "message": "Saving failed because permission was not granted."
+  },
+  "options_saveSuccess": {
+    "message": "Settings saved!"
+  },
+  "options_saveFail": {
+    "message": "Saving failed"
+  }
+}
