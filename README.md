@@ -3,7 +3,7 @@ FreshRSS Checker
 FreshRSS Checker is a WebExtension that tracks unread items in a [FreshRSS](https://freshrss.org) instance and shows a badge with the number of unread articles.
 
 ## Setup
-1. Install the extension
+1. Install the extension: [Firefox Add-Ons](https://addons.mozilla.org/addon/freshrss-checker/) - [Chrome Web Store](https://chrome.google.com/webstore/detail/freshrss-checker/fkckemcdpfnblnkndachclpjfmlhofeg)
 2. Open the extension's preferences page from add-ons manager and set the FreshRSS base URL, username, and API password (not your regular password, remember to enable mobile API access).
 3. Place the toolbar icon in a visible location if you want to see the number of unread items.
 
