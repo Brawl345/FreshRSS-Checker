@@ -4,6 +4,8 @@
 
 const freshRssCheckerOptions = () => {
 
+  const sidebarSupported = ('sidebarAction' in browser);
+
   const i18n = {
     title: browser.i18n.getMessage('options_title'),
     extensionName: browser.i18n.getMessage('extensionName'),
@@ -15,6 +17,7 @@ const freshRssCheckerOptions = () => {
     passwordPlaceholder: browser.i18n.getMessage('options_freshRssPasswordPlaceholder'),
     intervalLabel: browser.i18n.getMessage('options_intervalLabel'),
     intervalPlaceholder: browser.i18n.getMessage('options_intervalPlaceholder'),
+    sidebarLabel: browser.i18n.getMessage('options_sidebarLabel'),
     save: browser.i18n.getMessage('options_save'),
     removePermissions: browser.i18n.getMessage('options_removePermissions'),
     hostsLabel: browser.i18n.getMessage('options_hostsLabel'),
@@ -31,6 +34,8 @@ const freshRssCheckerOptions = () => {
     username: document.getElementById('username'),
     password: document.getElementById('password'),
     interval: document.getElementById('interval'),
+    sidebar: document.getElementById('sidebar'),
+    sidebarOption: document.getElementById('sidebar-option'),
     save: document.getElementById('save'),
     message: document.getElementById('message'),
     removePermissionsBtn: document.getElementById('remove-permissions'),
@@ -43,6 +48,7 @@ const freshRssCheckerOptions = () => {
     username: '',
     password: '',
     interval: 5.0,
+    sidebar: false
   };
 
   const localize = () => {
@@ -57,6 +63,7 @@ const freshRssCheckerOptions = () => {
     HTML.password.placeholder = i18n.passwordPlaceholder;
     HTML.interval.previousSibling.textContent = i18n.intervalLabel;
     HTML.interval.placeholder = i18n.intervalPlaceholder;
+    HTML.sidebar.previousSibling.textContent = i18n.sidebarLabel;
 
     HTML.save.textContent = i18n.save;
     HTML.removePermissionsBtn.textContent = i18n.removePermissions;
@@ -77,10 +84,18 @@ const freshRssCheckerOptions = () => {
   };
 
   const restoreOptions = async () => {
+    if (sidebarSupported === false) {
+      HTML.sidebarOption.style.display = 'none';
+    }
+
     const userOptions = await browser.storage.local.get(OPTIONS);
     for (const key in userOptions) {
       const htmlElement = document.getElementsByName(key)[0];
-      htmlElement.value = userOptions[key];
+      if (htmlElement.type === 'checkbox') {
+        htmlElement.checked = userOptions[key];
+      } else {
+        htmlElement.value = userOptions[key];
+      }
     }
   };
 
@@ -106,6 +121,9 @@ const freshRssCheckerOptions = () => {
       const htmlElement = document.getElementsByName(key)[0];
 
       switch (htmlElement.type) {
+      case 'checkbox':
+        userOptions[key] = htmlElement.checked;
+        break;
       case 'number':
         userOptions[key] = parseInt(htmlElement.value);
         break;

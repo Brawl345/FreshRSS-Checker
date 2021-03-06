@@ -2,8 +2,12 @@
 
 const freshRssChecker = () => {
 
+  const sidebarSupported = ('sidebarAction' in browser);
+
   const i18n = {
     contextMenu_checkNow: browser.i18n.getMessage('contextMenu_checkNow'),
+    contextMenu_sidebar: browser.i18n.getMessage('contextMenu_sidebar'),
+    contextMenu_noSidebar: browser.i18n.getMessage('contextMenu_noSidebar'),
     badge_error: browser.i18n.getMessage('badge_error')
   };
 
@@ -17,6 +21,7 @@ const freshRssChecker = () => {
     url: '',
     api_key: '',
     interval: 5.0,
+    sidebar: false,
   };
 
   const loadOptions = async () => {
@@ -32,13 +37,24 @@ const freshRssChecker = () => {
     browser.browserAction.setBadgeText({ text: text });
   };
 
-  const openFreshRssPage = () => {
+  const handleBrowserAction = async () => {
     if (OPTIONS.url !== '') {
       browser.browserAction.setBadgeText({ text: '' });
-      browser.tabs.create({ url: OPTIONS.url });
+      OPTIONS.sidebar === true ? openFreshRssInSidebar() : openFreshRssPage();
     } else {
       browser.runtime.openOptionsPage();
     }
+  };
+
+  const openFreshRssPage = async () => {
+    browser.tabs.create({ url: OPTIONS.url });
+  };
+
+  const openFreshRssInSidebar = async () => {
+    await browser.sidebarAction.open();
+    browser.sidebarAction.setPanel({
+      panel: OPTIONS.url
+    });
   };
 
   const checkFeeds = async function () {
@@ -75,11 +91,31 @@ const freshRssChecker = () => {
     });
     await browser.contextMenus.removeAll();
     browser.contextMenus.create({
-      id: 'freshrss-checker@brawl345.github.com__browserAction_contextMenu',
+      id: 'freshrss-checker@brawl345.github.com__browserAction_contextMenu_checkNow',
       title: i18n.contextMenu_checkNow,
       contexts: ['browser_action'],
       onclick: checkFeeds
     });
+
+    if (sidebarSupported === true) {
+
+      if (OPTIONS.sidebar === true) {
+        browser.contextMenus.create({
+          id: 'freshrss-checker@brawl345.github.com__browserAction_contextMenu_openPage',
+          title: i18n.contextMenu_noSidebar,
+          contexts: ['browser_action'],
+          onclick: openFreshRssPage
+        });
+      } else {
+        browser.contextMenus.create({
+          id: 'freshrss-checker@brawl345.github.com__browserAction_contextMenu_openSidebar',
+          title: i18n.contextMenu_sidebar,
+          contexts: ['browser_action'],
+          onclick: openFreshRssInSidebar
+        });
+      }
+
+    }
   };
 
   const handleInitMessage = async (request) => {
@@ -102,7 +138,7 @@ const freshRssChecker = () => {
       await loadOptions();
 
       browser.alarms.onAlarm.addListener(checkFeeds);
-      browser.browserAction.onClicked.addListener(openFreshRssPage);
+      browser.browserAction.onClicked.addListener(handleBrowserAction);
       browser.runtime.onMessage.addListener(handleInitMessage);
 
       if (OPTIONS.url === '') {

@@ -8,8 +8,13 @@
     "description": "Description of the extension."
   },
   "contextMenu_checkNow": {
-    "message": "Check now",
-    "description": "Context menu entry"
+    "message": "Check now"
+  },
+  "contextMenu_sidebar": {
+    "message": "Open FreshRSS in sidebar"
+  },
+  "contextMenu_noSidebar": {
+    "message": "Open FreshRSS page"
   },
   "badge_error": {
     "message": "ERR",
@@ -42,6 +47,9 @@
   },
   "options_intervalPlaceholder": {
     "message": "Check interval"
+  },
+  "options_sidebarLabel": {
+    "message": "Open in sidebar"
   },
   "options_save": {
     "message": "Save settings"

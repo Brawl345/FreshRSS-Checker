@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## 2.2.0
+
+* "Open in sidebar" option (Firefox-only)
+* Open page or sidebar added to context menu
+
 ## 2.1.0
 
 * Added German translation

@@ -8,6 +8,12 @@
   "contextMenu_checkNow": {
     "message": "Jetzt prüfen"
   },
+  "contextMenu_sidebar": {
+    "message": "FreshRSS in Seitenleiste öffnen"
+  },
+  "contextMenu_noSidebar": {
+    "message": "FreshRSS öffnen"
+  },
   "options_title": {
     "message": "FreshRSS Checker Optionen"
   },
@@ -31,6 +37,9 @@
   },
   "options_intervalPlaceholder": {
     "message": "Prüf-Intervall"
+  },
+  "options_sidebarLabel": {
+    "message": "In Seitenleiste öffnen"
   },
   "options_save": {
     "message": "Einstellungen speichern"

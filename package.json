@@ -1,6 +1,6 @@
 {
   "name": "freshrss-checker",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Shows unread count for FreshRSS",
   "repository": {
     "url": "https://github.com/Brawl345/FreshRSS-Checker"
