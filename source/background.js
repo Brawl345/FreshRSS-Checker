@@ -132,22 +132,22 @@ const freshRssChecker = () => {
     }
   };
 
-  return ({
-    init: async () => {
-      setBadge(BADGE_COLORS.NORMAL, '');
-      await loadOptions();
+  const init = async () => {
+    setBadge(BADGE_COLORS.NORMAL, '');
+    await loadOptions();
 
-      browser.alarms.onAlarm.addListener(checkFeeds);
-      browser.browserAction.onClicked.addListener(handleBrowserAction);
-      browser.runtime.onMessage.addListener(handleInitMessage);
+    browser.alarms.onAlarm.addListener(checkFeeds);
+    browser.browserAction.onClicked.addListener(handleBrowserAction);
+    browser.runtime.onMessage.addListener(handleInitMessage);
 
-      if (OPTIONS.url === '') {
-        setBadge(BADGE_COLORS.WARNING, '!');
-      } else {
-        setup();
-      }
-    },
-  });
+    if (OPTIONS.url === '') {
+      setBadge(BADGE_COLORS.WARNING, '!');
+    } else {
+      setup();
+    }
+  };
+
+  return init();
 };
 
-freshRssChecker().init();
+freshRssChecker();

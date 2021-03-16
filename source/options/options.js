@@ -155,15 +155,15 @@ const freshRssCheckerOptions = () => {
       .catch(() => setMessage('failure', i18n.saveFail));
   };
 
-  return ({
-    init: async () => {
-      localize();
-      restoreOptions();
-      await reloadHostsTextField();
-      document.addEventListener('submit', saveOptions);
-      HTML.removePermissionsBtn.addEventListener('click', removeHostPermissions);
-    },
-  });
+  const init = async () => {
+    localize();
+    restoreOptions();
+    await reloadHostsTextField();
+    document.addEventListener('submit', saveOptions);
+    HTML.removePermissionsBtn.addEventListener('click', removeHostPermissions);
+  };
+
+  return init();
 };
 
-document.addEventListener('DOMContentLoaded', () => freshRssCheckerOptions().init());
+document.addEventListener('DOMContentLoaded', () => freshRssCheckerOptions());
