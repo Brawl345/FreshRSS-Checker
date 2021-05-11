@@ -18,8 +18,8 @@
   "license": "Unlicense",
   "devDependencies": {
     "@types/firefox-webext-browser": "^82.0.0",
-    "eslint": "^7.21.0",
-    "web-ext": "^5.5.0"
+    "eslint": "^7.26.0",
+    "web-ext": "^6.1.0"
   },
   "webExt": {
     "sourceDir": "./source/"
