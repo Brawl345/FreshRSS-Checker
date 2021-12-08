@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>__options_title__</title>
+
+    <style>
+      body {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+
+      form label {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        text-align: right;
+        width: 400px;
+        margin-bottom: 10px;
+      }
+
+      input {
+        height: 20px;
+        flex: 0 0 200px;
+        margin-left: 10px;
+      }
+
+      #message {
+        display: none;
+      }
+
+      .float-right {
+        float: right;
+      }
+
+      .success {
+        color: green;
+      }
+
+      .failure {
+        color: red;
+      }
+
+      textarea {
+        width: 100%;
+        resize: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="title">__extensionName__</h1>
+
+    <form>
+      <label>
+        __options_freshRssUrlLabel__
+        <input
+          type="url"
+          id="url"
+          name="url"
+          placeholder="__options_freshRssUrlPlaceholder__"
+          required
+        />
+      </label>
+
+      <label>
+        __options_freshRssUsernameLabel__
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="__options_freshRssUsernamePlaceholder__"
+          required
+        />
+      </label>
+
+      <label>
+        __options_freshRssPasswordLabel__
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="__options_freshRssPasswordPlaceholder__"
+          required
+        />
+      </label>
+
+      <label>
+        __options_intervalLabel__
+        <input
+          type="number"
+          id="interval"
+          min="1"
+          step="1"
+          name="interval"
+          placeholder="__options_intervalPlaceholder__"
+          required
+        />
+      </label>
+
+      <label id="sidebar-option">
+        __options_sidebarLabel__
+        <input id="sidebar" name="sidebar" type="checkbox" />
+      </label>
+
+      <div>
+        <button id="save" class="browser-style" type="submit">
+          __options_save__
+        </button>
+        <span id="message">__MSG__</span>
+      </div>
+    </form>
+
+    <script type="module" src="../build/options.js"></script>
+  </body>
+</html>

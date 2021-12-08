@@ -1,27 +1,35 @@
 {
   "name": "freshrss-checker",
-  "version": "2.2.0",
   "description": "Shows unread count for FreshRSS",
+  "version": "3.0.0",
+  "author": "Brawl345",
+  "license": "Unlicense",
   "repository": {
     "url": "https://github.com/Brawl345/FreshRSS-Checker"
   },
+  "main": "source/service_worker.js",
+  "type": "module",
   "scripts": {
-    "build": "web-ext build --overwrite-dest",
-    "start:firefox": "web-ext run --start-url=about:debugging#/runtime/this-firefox",
-    "lint": "web-ext lint"
-  },
-  "keywords": [
-    "browser",
-    "webextension"
-  ],
-  "author": "Brawl345",
-  "license": "Unlicense",
-  "devDependencies": {
-    "@types/firefox-webext-browser": "^82.0.1",
-    "eslint": "^7.32.0",
-    "web-ext": "^6.2.0"
+    "dev": "node esbuild.js",
+    "start:chrome": "web-ext run -t chromium",
+    "build": "cross-env NODE_ENV=\"production\" node esbuild.js && web-ext build --overwrite-dest",
+    "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
+    "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
+    "web-ext-lint": "cross-env NODE_ENV=\"production\" node esbuild.js && web-ext lint"
   },
   "webExt": {
-    "sourceDir": "./source/"
+    "sourceDir": "./public/"
+  },
+  "devDependencies": {
+    "chrome-types": "0.1.73",
+    "cross-env": "7.0.3",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "8.3.0",
+    "esbuild": "0.14.1",
+    "prettier": "2.5.1",
+    "web-ext": "6.6.0"
+  },
+  "dependencies": {
+    "md5": "2.3.0"
   }
 }
