@@ -20,7 +20,7 @@ build({
     resolve(__dirname, 'source', 'options.js'),
   ],
   bundle: true,
-  minify: true,
+  minify: false,
   format: 'esm',
   splitting: true,
   watch: !isProd,
