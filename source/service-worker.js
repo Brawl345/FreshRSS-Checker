@@ -3,7 +3,7 @@ import {
   onClickIcon,
   onInstalled,
   setupAlarm,
-} from './service_worker_functions.js';
+} from './service-worker-functions.js';
 import { MENU_ITEMS } from './constants.js';
 import { getOptions } from './storage.js';
 

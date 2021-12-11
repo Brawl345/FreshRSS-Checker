@@ -27,15 +27,15 @@ const i18n = {
 };
 
 const HTML = {
-  title: document.getElementById('title'),
-  url: document.getElementById('url'),
-  username: document.getElementById('username'),
-  password: document.getElementById('password'),
-  interval: document.getElementById('interval'),
-  sidebar: document.getElementById('sidebar'),
-  sidebarOption: document.getElementById('sidebar-option'),
-  save: document.getElementById('save'),
-  message: document.getElementById('message'),
+  title: document.querySelector('#title'),
+  url: document.querySelector('#url'),
+  username: document.querySelector('#username'),
+  password: document.querySelector('#password'),
+  interval: document.querySelector('#interval'),
+  sidebar: document.querySelector('#sidebar'),
+  sidebarOption: document.querySelector('#sidebar-option'),
+  save: document.querySelector('#save'),
+  message: document.querySelector('#message'),
 };
 
 const clearMessage = () => {
@@ -78,7 +78,7 @@ const saveOptions = async (event) => {
           userOptions[key] = htmlElement.checked;
           break;
         case 'number':
-          userOptions[key] = parseInt(htmlElement.value);
+          userOptions[key] = Number.parseInt(htmlElement.value);
           break;
         case 'url':
           userOptions[key] = htmlElement.value.replace(/\/?$/, '/');
@@ -110,7 +110,8 @@ const saveOptions = async (event) => {
   try {
     await chrome.storage.sync.set(userOptions);
     setMessage('success', i18n.saveSuccess);
-  } catch (err) {
+  } catch (error) {
+    console.error(error);
     setMessage('failure', i18n.saveFail);
   }
 };

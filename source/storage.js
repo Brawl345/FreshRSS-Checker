@@ -3,7 +3,7 @@ export const defaults = Object.freeze({
   apiKey: '',
   username: '',
   password: '',
-  interval: 5.0,
+  interval: 5,
   // sidebar: false,
 });
 
