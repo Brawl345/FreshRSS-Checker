@@ -27,6 +27,8 @@ build({
   watch: !isProduction,
   sourcemap: isProduction ? false : 'inline',
   target: ['chrome96'],
+  logLevel: 'info',
+  legalComments: 'none',
   outdir: resolve(__dirname, 'public', 'build'),
 }).catch((error) => {
   console.error(error);

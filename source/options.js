@@ -105,7 +105,7 @@ const saveOptions = async (event) => {
     }
   }
 
-  userOptions.apiKey = md5(userOptions.username + ':' + userOptions.password);
+  userOptions.apiKey = md5(`${userOptions.username}:${userOptions.password}`);
 
   try {
     await chrome.storage.sync.set(userOptions);

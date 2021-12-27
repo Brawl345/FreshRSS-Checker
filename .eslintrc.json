@@ -7,7 +7,6 @@
     "webextensions": true
   },
   "extends": ["eslint:recommended", "plugin:unicorn/recommended", "prettier"],
-  "plugins": ["unicorn"],
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module",
@@ -15,7 +14,9 @@
       "modules": true
     }
   },
+  "plugins": ["unicorn"],
   "rules": {
+    "arrow-body-style": "error",
     "consistent-return": "error",
     "indent": [
       "error",
@@ -31,7 +32,12 @@
         "allow": ["error"]
       }
     ],
+    "no-var": "error",
+    "prefer-arrow-callback": "error",
+    "prefer-const": "error",
+    "prefer-template": "error",
     "quotes": ["error", "single"],
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "unicorn/no-null": "off"
   }
 }
