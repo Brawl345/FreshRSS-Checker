@@ -7,6 +7,4 @@ export const defaults = Object.freeze({
   // sidebar: false,
 });
 
-export const getOptions = async () => {
-  return chrome.storage.sync.get(defaults);
-};
+export const getOptions = async () => chrome.storage.sync.get(defaults);
