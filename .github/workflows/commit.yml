@@ -38,6 +38,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: FreshRSS-Checker-${{github.sha}}
-          path: web-ext-artifacts/*.zip
+          name: FreshRSS-Checker-${{github.sha}}.zip
+          path: public/*
           if-no-files-found: error
