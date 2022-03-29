@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.1
+
+- Fixed i18n thanks to an upstream bug that got fixed in Chrome 100
+
 ## 3.0.0
 
 - Use Manifest v3

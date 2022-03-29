@@ -4,18 +4,11 @@ import { MENU_ITEMS } from './constants.js';
 // TODO: Firefox does not support Manifest v3 yet
 // const sidebarSupported = 'sidebarAction' in chrome;
 
-// TODO: getMessage() is not supported in MV3: https://github.com/w3c/webextensions/issues/93
-// Hardcode these for now...
 const i18n = {
-  // contextMenu_checkNow: chrome.i18n.getMessage('contextMenu_checkNow'),
-  // contextMenu_sidebar: chrome.i18n.getMessage('contextMenu_sidebar'),
-  // contextMenu_noSidebar: chrome.i18n.getMessage('contextMenu_noSidebar'),
-  // badge_error: chrome.i18n.getMessage('badge_error'),
-
-  contextMenu_checkNow: 'Check now',
-  contextMenu_sidebar: 'Open FreshRSS in sidebar',
-  contextMenu_noSidebar: 'Open FreshRSS page',
-  badge_error: 'ERR',
+  contextMenu_checkNow: chrome.i18n.getMessage('contextMenu_checkNow'),
+  contextMenu_sidebar: chrome.i18n.getMessage('contextMenu_sidebar'),
+  contextMenu_noSidebar: chrome.i18n.getMessage('contextMenu_noSidebar'),
+  badge_error: chrome.i18n.getMessage('badge_error'),
 };
 
 const BADGE_COLORS = {
