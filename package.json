@@ -12,6 +12,7 @@
   "scripts": {
     "dev": "node esbuild.js",
     "start:chrome": "web-ext run -t chromium",
+    "start:firefox": "web-ext run -t firefox-desktop",
     "build": "cross-env NODE_ENV=\"production\" node esbuild.js && web-ext build --overwrite-dest",
     "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
@@ -29,7 +30,7 @@
     "eslint-plugin-unicorn": "42.0.0",
     "esbuild": "0.14.34",
     "prettier": "2.6.2",
-    "web-ext": "6.8.0"
+    "web-ext":"8.1.0"
   },
   "dependencies": {
     "md5": "2.3.0"

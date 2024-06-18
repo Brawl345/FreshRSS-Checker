@@ -4,7 +4,7 @@ export const defaults = Object.freeze({
   username: '',
   password: '',
   interval: 5,
-  // sidebar: false,
+  sidebar: false,
 });
 
 export const getOptions = async () => chrome.storage.sync.get(defaults);

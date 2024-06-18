@@ -2,6 +2,7 @@ import {
   checkFeeds,
   onClickIcon,
   onInstalled,
+  openFreshRssInSidebar,
   setupAlarm,
 } from './service-worker-functions.js';
 import { MENU_ITEMS } from './constants.js';
@@ -15,6 +16,9 @@ chrome.contextMenus.onClicked.addListener(({ menuItemId }) => {
   switch (menuItemId) {
     case MENU_ITEMS.checkNow:
       checkFeeds();
+      break;
+    case MENU_ITEMS.openSidebar:
+      openFreshRssInSidebar();
       break;
     default:
       break;

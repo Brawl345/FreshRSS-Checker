@@ -1,8 +1,7 @@
 import { defaults, getOptions } from './storage.js';
 import md5 from 'md5';
 
-// TODO: Firefox does not yet support Manifest v3
-// const sidebarSupported = 'sidebarAction' in chrome;
+const sidebarSupported = 'sidebarAction' in chrome;
 
 const i18n = {
   title: chrome.i18n.getMessage('options_title'),
@@ -133,9 +132,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   HTML.save.textContent = i18n.save;
 
-  // if (sidebarSupported === false) {
-  HTML.sidebarOption.style.display = 'none';
-  // }
+  if (sidebarSupported === false) {
+    HTML.sidebarOption.style.display = 'none';
+  }
 
   restoreOptions();
   document.addEventListener('submit', saveOptions);

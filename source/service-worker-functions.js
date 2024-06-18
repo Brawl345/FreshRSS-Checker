@@ -1,8 +1,7 @@
 import { getOptions } from './storage.js';
 import { MENU_ITEMS } from './constants.js';
 
-// TODO: Firefox does not support Manifest v3 yet
-// const sidebarSupported = 'sidebarAction' in chrome;
+const sidebarSupported = 'sidebarAction' in chrome;
 
 const i18n = {
   contextMenu_checkNow: chrome.i18n.getMessage('contextMenu_checkNow'),
@@ -60,13 +59,13 @@ const openFreshRssPage = async () => {
   chrome.tabs.create({ url });
 };
 
-// const openFreshRssInSidebar = async () => {
-//   const { url } = await getOptions();
-//   await chrome.sidebarAction.open();
-//   chrome.sidebarAction.setPanel({
-//     panel: url,
-//   });
-// };
+export const openFreshRssInSidebar = async () => {
+  const { url } = await getOptions();
+  await chrome.sidebarAction.open();
+  chrome.sidebarAction.setPanel({
+    panel: url,
+  });
+};
 
 export const setupAlarm = async (interval) => {
   const alarmId = 'freshrss-checker@brawl345.github.com__alarm';
@@ -80,13 +79,17 @@ export const setupAlarm = async (interval) => {
 };
 
 export const onClickIcon = async () => {
-  const { apiKey, url } = await getOptions();
+  const { apiKey, url, sidebar } = await getOptions();
 
   if (apiKey === '' || url === '') {
     chrome.runtime.openOptionsPage();
   } else {
     setBadge(BADGE_COLORS.NORMAL, '');
-    openFreshRssPage();
+    if (sidebar) {
+      openFreshRssInSidebar();
+    } else {
+      openFreshRssPage();
+    }
   }
 };
 
@@ -96,5 +99,14 @@ export const onInstalled = () => {
     title: i18n.contextMenu_checkNow,
     contexts: ['action'],
   });
+
+  if (sidebarSupported) {
+    chrome.contextMenus.create({
+      id: MENU_ITEMS.openSidebar,
+      title: i18n.contextMenu_sidebar,
+      contexts: ['action'],
+    });
+  }
+
   checkFeeds();
 };
