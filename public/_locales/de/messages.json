@@ -30,7 +30,7 @@
     "message": "API-Passwort"
   },
   "options_freshRssPasswordPlaceholder": {
-    "message": "API-Passwort"
+    "message": "API-Passwort, nicht das Benutzerpasswort!"
   },
   "options_intervalLabel": {
     "message": "Prüf-Intervall (in Minuten)"
@@ -54,7 +54,7 @@
     "message": "FreshRSS Checker kann zurzeit auf keine Adressen zugreifen."
   },
   "options_permissionsCleared": {
-    "message": "Hosts-Berechtigungen zurückgesetzt! Bitte denke daran, deine Einstellungen erneut zu speichern."
+    "message": "Host-Berechtigungen zurückgesetzt."
   },
   "options_permissionNotGranted": {
     "message": "Speichern fehlgeschlagen, da die nötige Berechtigung nicht erteilt wurde."

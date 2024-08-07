@@ -25,7 +25,7 @@
     "description": "Title tag for the options page, normally not shown"
   },
   "options_freshRssUrlLabel": {
-    "message": "FreshRSS URL"
+    "message": "FreshRSS-URL"
   },
   "options_freshRssUrlPlaceholder": {
     "message": "Path to FreshRSS instance"
@@ -40,7 +40,7 @@
     "message": "API password"
   },
   "options_freshRssPasswordPlaceholder": {
-    "message": "API password"
+    "message": "API password, not the user password!"
   },
   "options_intervalLabel": {
     "message": "Update interval (minutes)"
@@ -64,7 +64,7 @@
     "message": "FreshRSS Checker can't currently access any addresses."
   },
   "options_permissionsCleared": {
-    "message": "Permissions cleared! Please remember to re-save your settings."
+    "message": "Hostp ermissions cleared."
   },
   "options_permissionNotGranted": {
     "message": "Saving failed because permission was not granted."

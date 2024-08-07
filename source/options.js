@@ -31,14 +31,19 @@ const i18n = {
 
 const HTML = {
   title: document.querySelector('#title'),
+  urlLabel: document.querySelector('label[for="url"]'),
   url: document.querySelector('#url'),
+  usernameLabel: document.querySelector('label[for="username"]'),
   username: document.querySelector('#username'),
+  passwordLabel: document.querySelector('label[for="password"]'),
   password: document.querySelector('#password'),
+  intervalLabel: document.querySelector('label[for="interval"]'),
   interval: document.querySelector('#interval'),
   sidebar: document.querySelector('#sidebar'),
   sidebarOption: document.querySelector('#sidebar-option'),
   save: document.querySelector('#save'),
   message: document.querySelector('#message'),
+  hostResetMessage: document.querySelector('#host-reset-message'),
   removePermissionsBtn: document.querySelector('#remove-permissions'),
   hostsLabel: document.querySelector('#hosts-label'),
   hosts: document.querySelector('#hosts'),
@@ -53,7 +58,19 @@ const setMessage = (variant, text) => {
   HTML.message.textContent = text;
   HTML.message.className = variant;
   HTML.message.style.display = 'block';
-  setTimeout(clearMessage, 2000);
+  setTimeout(clearMessage, 2500);
+};
+
+const clearHostResetMessage = () => {
+  HTML.hostResetMessage.style.display = 'none';
+  HTML.hostResetMessage.className = '';
+};
+
+const setHostResetMessage = (variant, text) => {
+  HTML.hostResetMessage.textContent = text;
+  HTML.hostResetMessage.className = variant;
+  HTML.hostResetMessage.style.display = 'block';
+  setTimeout(clearHostResetMessage, 2500);
 };
 
 const restoreOptions = async () => {
@@ -76,7 +93,7 @@ const removeHostPermissions = async () => {
     await chrome.permissions.remove({ origins: [...all_permissions.origins] });
   }
   await reloadHostsTextField();
-  setMessage('success', i18n.permissionsCleared);
+  setHostResetMessage('success', i18n.permissionsCleared);
 };
 
 const reloadHostsTextField = async () => {
@@ -143,15 +160,15 @@ document.addEventListener('DOMContentLoaded', () => {
   document.title = i18n.title;
   HTML.title.textContent = i18n.extensionName;
 
-  HTML.url.previousSibling.textContent = i18n.urlLabel;
+  HTML.urlLabel.textContent = i18n.urlLabel;
   HTML.url.placeholder = i18n.urlPlaceholder;
-  HTML.username.previousSibling.textContent = i18n.usernameLabel;
+  HTML.usernameLabel.textContent = i18n.usernameLabel;
   HTML.username.placeholder = i18n.usernamePlaceholder;
-  HTML.password.previousSibling.textContent = i18n.passwordLabel;
+  HTML.passwordLabel.textContent = i18n.passwordLabel;
   HTML.password.placeholder = i18n.passwordPlaceholder;
-  HTML.interval.previousSibling.textContent = i18n.intervalLabel;
+  HTML.intervalLabel.textContent = i18n.intervalLabel;
   HTML.interval.placeholder = i18n.intervalPlaceholder;
-  HTML.sidebar.previousSibling.textContent = i18n.sidebarLabel;
+  HTML.sidebar.nextSibling.textContent = ` ${i18n.sidebarLabel}`;
 
   HTML.save.textContent = i18n.save;
 
