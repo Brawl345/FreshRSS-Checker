@@ -2,6 +2,7 @@
 
 ## 3.1.0
 
+- Redesign settings page
 - Fix Firefox compatibility
 - Fix selecting the add-on in the sidebar in Firefox
 - Host permissions are optional again

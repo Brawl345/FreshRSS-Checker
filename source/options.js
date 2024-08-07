@@ -8,6 +8,7 @@ const i18n = {
   extensionName: chrome.i18n.getMessage('extensionName'),
   urlLabel: chrome.i18n.getMessage('options_freshRssUrlLabel'),
   urlPlaceholder: chrome.i18n.getMessage('options_freshRssUrlPlaceholder'),
+  urlHelp: chrome.i18n.getMessage('options_freshRssUrlHelp'),
   usernameLabel: chrome.i18n.getMessage('options_freshRssUsernameLabel'),
   usernamePlaceholder: chrome.i18n.getMessage(
     'options_freshRssUsernamePlaceholder'
@@ -33,6 +34,7 @@ const HTML = {
   title: document.querySelector('#title'),
   urlLabel: document.querySelector('label[for="url"]'),
   url: document.querySelector('#url'),
+  urlHelp: document.querySelector('#url-help'),
   usernameLabel: document.querySelector('label[for="username"]'),
   username: document.querySelector('#username'),
   passwordLabel: document.querySelector('label[for="password"]'),

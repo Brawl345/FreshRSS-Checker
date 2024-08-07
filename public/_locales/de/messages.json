@@ -20,6 +20,9 @@
   "options_freshRssUrlPlaceholder": {
     "message": "Pfad zur FreshRSS-Instanz"
   },
+  "options_freshRssUrlHelp": {
+    "message": "Die API muss unter /api/fever.php erreichbar sein."
+  },
   "options_freshRssUsernameLabel": {
     "message": "Benutzername"
   },

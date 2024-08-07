@@ -30,6 +30,9 @@
   "options_freshRssUrlPlaceholder": {
     "message": "Path to FreshRSS instance"
   },
+  "options_freshRssUrlHelp": {
+    "message": "The API must be accessible under /api/fever.php."
+  },
   "options_freshRssUsernameLabel": {
     "message": "Username"
   },
