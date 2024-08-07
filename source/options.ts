@@ -1,7 +1,6 @@
 import { defaults, getOptions } from './storage.js';
 import md5 from 'md5';
-
-const sidebarSupported = 'sidebarAction' in chrome;
+import { LocalStorageKey, MessageVariant, Options, supportsSidebar } from './constants';
 
 const i18n = {
   title: chrome.i18n.getMessage('options_title'),
@@ -10,13 +9,9 @@ const i18n = {
   urlPlaceholder: chrome.i18n.getMessage('options_freshRssUrlPlaceholder'),
   urlHelp: chrome.i18n.getMessage('options_freshRssUrlHelp'),
   usernameLabel: chrome.i18n.getMessage('options_freshRssUsernameLabel'),
-  usernamePlaceholder: chrome.i18n.getMessage(
-    'options_freshRssUsernamePlaceholder'
-  ),
+  usernamePlaceholder: chrome.i18n.getMessage('options_freshRssUsernamePlaceholder'),
   passwordLabel: chrome.i18n.getMessage('options_freshRssPasswordLabel'),
-  passwordPlaceholder: chrome.i18n.getMessage(
-    'options_freshRssPasswordPlaceholder'
-  ),
+  passwordPlaceholder: chrome.i18n.getMessage('options_freshRssPasswordPlaceholder'),
   intervalLabel: chrome.i18n.getMessage('options_intervalLabel'),
   intervalPlaceholder: chrome.i18n.getMessage('options_intervalPlaceholder'),
   sidebarLabel: chrome.i18n.getMessage('options_sidebarLabel'),
@@ -31,24 +26,24 @@ const i18n = {
 };
 
 const HTML = {
-  title: document.querySelector('#title'),
-  urlLabel: document.querySelector('label[for="url"]'),
-  url: document.querySelector('#url'),
-  urlHelp: document.querySelector('#url-help'),
-  usernameLabel: document.querySelector('label[for="username"]'),
-  username: document.querySelector('#username'),
-  passwordLabel: document.querySelector('label[for="password"]'),
-  password: document.querySelector('#password'),
-  intervalLabel: document.querySelector('label[for="interval"]'),
-  interval: document.querySelector('#interval'),
-  sidebar: document.querySelector('#sidebar'),
-  sidebarOption: document.querySelector('#sidebar-option'),
-  save: document.querySelector('#save'),
-  message: document.querySelector('#message'),
-  hostResetMessage: document.querySelector('#host-reset-message'),
-  removePermissionsBtn: document.querySelector('#remove-permissions'),
-  hostsLabel: document.querySelector('#hosts-label'),
-  hosts: document.querySelector('#hosts'),
+  title: document.querySelector('#title') as HTMLHeadingElement,
+  urlLabel: document.querySelector('label[for="url"]') as HTMLLabelElement,
+  url: document.querySelector('#url') as HTMLInputElement,
+  urlHelp: document.querySelector('#url-help') as HTMLParagraphElement,
+  usernameLabel: document.querySelector('label[for="username"]') as HTMLLabelElement,
+  username: document.querySelector('#username') as HTMLInputElement,
+  passwordLabel: document.querySelector('label[for="password"]') as HTMLLabelElement,
+  password: document.querySelector('#password') as HTMLInputElement,
+  intervalLabel: document.querySelector('label[for="interval"]') as HTMLLabelElement,
+  interval: document.querySelector('#interval') as HTMLInputElement,
+  sidebar: document.querySelector('#sidebar') as HTMLInputElement,
+  sidebarOption: document.querySelector('#sidebar-option') as HTMLLabelElement,
+  save: document.querySelector('#save') as HTMLButtonElement,
+  message: document.querySelector('#message') as HTMLSpanElement,
+  hostResetMessage: document.querySelector('#host-reset-message') as HTMLSpanElement,
+  removePermissionsBtn: document.querySelector('#remove-permissions') as HTMLButtonElement,
+  hostsLabel: document.querySelector('#hosts-label') as HTMLLabelElement,
+  hosts: document.querySelector('#hosts') as HTMLTextAreaElement,
 };
 
 const clearMessage = () => {
@@ -56,7 +51,7 @@ const clearMessage = () => {
   HTML.message.className = '';
 };
 
-const setMessage = (variant, text) => {
+const setMessage = (variant: MessageVariant, text: string) => {
   HTML.message.textContent = text;
   HTML.message.className = variant;
   HTML.message.style.display = 'block';
@@ -68,7 +63,7 @@ const clearHostResetMessage = () => {
   HTML.hostResetMessage.className = '';
 };
 
-const setHostResetMessage = (variant, text) => {
+const setHostResetMessage = (variant: MessageVariant, text: string) => {
   HTML.hostResetMessage.textContent = text;
   HTML.hostResetMessage.className = variant;
   HTML.hostResetMessage.style.display = 'block';
@@ -78,12 +73,12 @@ const setHostResetMessage = (variant, text) => {
 const restoreOptions = async () => {
   const userOptions = await getOptions();
   for (const key in userOptions) {
-    const htmlElement = document.getElementsByName(key)[0];
+    const htmlElement = document.getElementsByName(key)[0] as HTMLInputElement | undefined;
     if (htmlElement !== undefined) {
       if (htmlElement.type === 'checkbox') {
-        htmlElement.checked = userOptions[key];
+        htmlElement.checked = userOptions[key as keyof Options] === 'true';
       } else {
-        htmlElement.value = userOptions[key];
+        htmlElement.value = <string>userOptions[key as keyof Options];
       }
     }
   }
@@ -91,39 +86,48 @@ const restoreOptions = async () => {
 
 const removeHostPermissions = async () => {
   const all_permissions = await chrome.permissions.getAll();
-  if (all_permissions.origins.length > 0) {
+  if (all_permissions.origins && all_permissions.origins.length > 0) {
     await chrome.permissions.remove({ origins: [...all_permissions.origins] });
   }
   await reloadHostsTextField();
-  setHostResetMessage('success', i18n.permissionsCleared);
+  setHostResetMessage(MessageVariant.Success, i18n.permissionsCleared);
 };
 
 const reloadHostsTextField = async () => {
   const all_permissions = await chrome.permissions.getAll();
-  HTML.hosts.value = all_permissions.origins.join('\n');
+  if (all_permissions.origins && all_permissions.origins.length > 0) {
+    HTML.hosts.value = all_permissions.origins.join('\n');
+  }
 };
 
-const saveOptions = async (event) => {
+const saveOptions = async (event: SubmitEvent) => {
   event.preventDefault();
-  const userOptions = {};
-  Object.assign(userOptions, defaults);
+  const userOptions: Options = { ...defaults };
 
   for (const key in userOptions) {
-    const htmlElement = document.getElementsByName(key)[0];
+    const htmlElement = document.getElementsByName(key)[0] as HTMLInputElement | undefined;
 
     if (htmlElement !== undefined) {
       switch (htmlElement.type) {
-        case 'checkbox':
-          userOptions[key] = htmlElement.checked;
+        case 'checkbox': {
+          // @ts-expect-error don't bother
+          userOptions[key as keyof Options] = htmlElement.checked;
           break;
-        case 'number':
-          userOptions[key] = Number.parseInt(htmlElement.value);
+        }
+        case 'number': {
+          // @ts-expect-error don't bother
+          userOptions[key as keyof Options] = Number.parseInt(htmlElement.value);
           break;
-        case 'url':
-          userOptions[key] = htmlElement.value.replace(/\/?$/, '/');
+        }
+        case 'url': {
+          // @ts-expect-error don't bother
+          userOptions[key as keyof Options] = htmlElement.value.replace(/\/?$/, '/');
           break;
-        default:
-          userOptions[key] = htmlElement.value;
+        }
+        default: {
+          // @ts-expect-error don't bother
+          userOptions[key as keyof Options] = htmlElement.value;
+        }
       }
     }
   }
@@ -133,7 +137,7 @@ const saveOptions = async (event) => {
   });
 
   if (!grantedPermission) {
-    setMessage('failure', i18n.permissionNotGranted);
+    setMessage(MessageVariant.Error, i18n.permissionNotGranted);
     return;
   }
 
@@ -144,20 +148,20 @@ const saveOptions = async (event) => {
 
     // Firefox
     if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem('url', userOptions.url);
-      localStorage.setItem('sidebar', userOptions.sidebar);
+      localStorage.setItem(LocalStorageKey.Url, userOptions.url);
+      localStorage.setItem(LocalStorageKey.Sidebar, String(userOptions.sidebar));
     }
 
     await reloadHostsTextField();
 
-    setMessage('success', i18n.saveSuccess);
+    setMessage(MessageVariant.Success, i18n.saveSuccess);
   } catch (error) {
     console.error(error);
-    setMessage('failure', i18n.saveFail);
+    setMessage(MessageVariant.Error, i18n.saveFail);
   }
 };
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   // Localize
   document.title = i18n.title;
   HTML.title.textContent = i18n.extensionName;
@@ -170,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
   HTML.password.placeholder = i18n.passwordPlaceholder;
   HTML.intervalLabel.textContent = i18n.intervalLabel;
   HTML.interval.placeholder = i18n.intervalPlaceholder;
-  HTML.sidebar.nextSibling.textContent = ` ${i18n.sidebarLabel}`;
+  (HTML.sidebar.nextSibling as HTMLElement).textContent = ` ${i18n.sidebarLabel}`;
 
   HTML.save.textContent = i18n.save;
 
@@ -178,12 +182,12 @@ document.addEventListener('DOMContentLoaded', () => {
   HTML.hostsLabel.textContent = i18n.hostsLabel;
   HTML.hosts.placeholder = i18n.hostsPlaceholder;
 
-  if (sidebarSupported === false) {
+  if (!supportsSidebar) {
     HTML.sidebarOption.style.display = 'none';
   }
 
-  restoreOptions();
-  reloadHostsTextField();
+  await restoreOptions();
+  await reloadHostsTextField();
   document.addEventListener('submit', saveOptions);
   HTML.removePermissionsBtn.addEventListener('click', removeHostPermissions);
 });

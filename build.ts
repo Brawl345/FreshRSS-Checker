@@ -17,9 +17,9 @@ try {
 
 build({
   entryPoints: [
-    resolve(__dirname, 'source', 'service-worker.js'),
-    resolve(__dirname, 'source', 'sidebar.js'),
-    resolve(__dirname, 'source', 'options.js'),
+    resolve(__dirname, 'source', 'service-worker.ts'),
+    resolve(__dirname, 'source', 'sidebar.ts'),
+    resolve(__dirname, 'source', 'options.ts'),
   ],
   bundle: true,
   minify: false,
@@ -27,7 +27,7 @@ build({
   splitting: true,
   watch: !isProduction,
   sourcemap: isProduction ? false : 'inline',
-  target: ['chrome96'],
+  target: ['chrome120', 'firefox120'],
   logLevel: 'info',
   legalComments: 'none',
   outdir: resolve(__dirname, 'public', 'build'),

@@ -1,7 +1,5 @@
 import { getOptions } from './storage.js';
-import { MENU_ITEMS } from './constants.js';
-
-const sidebarSupported = 'sidebarAction' in chrome;
+import { ALARM_ID, BadgeColor, FreshRSSApiResponse, LocalStorageKey, MenuItem, supportsSidebar } from './constants';
 
 const i18n = {
   contextMenu_checkNow: chrome.i18n.getMessage('contextMenu_checkNow'),
@@ -10,13 +8,7 @@ const i18n = {
   badge_error: chrome.i18n.getMessage('badge_error'),
 };
 
-const BADGE_COLORS = {
-  NORMAL: 'blue',
-  WARNING: 'yellow',
-  FAILURE: 'red',
-};
-
-const setBadge = (color, text) => {
+const setBadge = (color: BadgeColor, text: string) => {
   chrome.action.setBadgeBackgroundColor({ color: color });
   chrome.action.setBadgeText({ text: text });
 };
@@ -24,33 +16,33 @@ const setBadge = (color, text) => {
 export const checkFeeds = async function () {
   const { apiKey, url } = await getOptions();
   if (apiKey === '' || url === '') {
-    setBadge(BADGE_COLORS.WARNING, '!');
+    setBadge(BadgeColor.Warning, '!');
     return;
   }
   const api = `${url}api/fever.php?api&unread_item_ids`;
   const formData = new FormData();
   formData.append('api_key', apiKey);
 
-  let body = {};
+  let body: FreshRSSApiResponse;
   try {
     const response = await fetch(api, { method: 'POST', body: formData });
     body = await response.json();
   } catch (error) {
     console.error(error);
-    setBadge(BADGE_COLORS.FAILURE, i18n.badge_error);
+    setBadge(BadgeColor.Failure, i18n.badge_error);
     return;
   }
 
   if (body.auth === 0) {
-    setBadge(BADGE_COLORS.FAILURE, i18n.badge_error);
+    setBadge(BadgeColor.Failure, i18n.badge_error);
     return;
   }
 
   if (body.unread_item_ids === '') {
-    setBadge(BADGE_COLORS.NORMAL, '');
+    setBadge(BadgeColor.Normal, '');
   } else {
     const unread_item_ids = body.unread_item_ids.split(',');
-    setBadge(BADGE_COLORS.NORMAL, unread_item_ids.length.toString());
+    setBadge(BadgeColor.Normal, unread_item_ids.length.toString());
   }
 };
 
@@ -76,12 +68,11 @@ export const openFreshRssInSidebar = async () => {
   await chrome.sidebarAction.open();
 };
 
-export const setupAlarm = async (interval) => {
-  const alarmId = 'freshrss-checker@brawl345.github.com__alarm';
-  const alarm = await chrome.alarms.get(alarmId);
+export const setupAlarm = async (interval: number) => {
+  const alarm = await chrome.alarms.get(ALARM_ID);
 
   if (!alarm || alarm.periodInMinutes !== interval) {
-    chrome.alarms.create(alarmId, {
+    await chrome.alarms.create(ALARM_ID, {
       periodInMinutes: interval,
     });
   }
@@ -102,7 +93,7 @@ export const onClickIcon = async () => {
   if (apiKey === '' || url === '') {
     chrome.runtime.openOptionsPage();
   } else {
-    setBadge(BADGE_COLORS.NORMAL, '');
+    setBadge(BadgeColor.Normal, '');
     if (sidebar) {
       openFreshRssInSidebar();
     } else {
@@ -113,7 +104,7 @@ export const onClickIcon = async () => {
 
 export const createOpenPageMenu = () => {
   chrome.contextMenus.create({
-    id: MENU_ITEMS.openPage,
+    id: MenuItem.OpenPage,
     title: i18n.contextMenu_noSidebar,
     contexts: ['action'],
   });
@@ -121,7 +112,7 @@ export const createOpenPageMenu = () => {
 
 export const createOpenSidebarMenu = () => {
   chrome.contextMenus.create({
-    id: MENU_ITEMS.openSidebar,
+    id: MenuItem.OpenSidebar,
     title: i18n.contextMenu_sidebar,
     contexts: ['action'],
   });
@@ -131,12 +122,12 @@ export const onInstalled = async () => {
   const { url, sidebar } = await getOptions();
 
   chrome.contextMenus.create({
-    id: MENU_ITEMS.checkNow,
+    id: MenuItem.CheckNow,
     title: i18n.contextMenu_checkNow,
     contexts: ['action'],
   });
 
-  if (sidebarSupported) {
+  if (supportsSidebar) {
     if (sidebar) {
       createOpenPageMenu();
     } else {
@@ -149,8 +140,8 @@ export const onInstalled = async () => {
   // asynchronously loses the "user interaction".
   // See https://bugzilla.mozilla.org/show_bug.cgi?id=1800401
   if (typeof window !== 'undefined' && window.localStorage) {
-    localStorage.setItem('url', url);
-    localStorage.setItem('sidebar', sidebar);
+    localStorage.setItem(LocalStorageKey.Url, url);
+    localStorage.setItem(LocalStorageKey.Sidebar, String(sidebar));
   }
 
   checkFeeds();
