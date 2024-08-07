@@ -4,7 +4,7 @@
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
   "author": "Andreas Bielawski",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "icons": {
     "16": "icons/16.png",
     "32": "icons/32.png",
@@ -41,7 +41,7 @@
     "open_at_install": false
   },
   "permissions": ["alarms", "contextMenus", "storage"],
-  "host_permissions": ["http://*/*", "https://*/*"],
+  "optional_host_permissions": ["http://*/*", "https://*/*"],
   "browser_specific_settings": {
     "gecko": {
       "id": "freshrss-checker@addons.mozilla.org",

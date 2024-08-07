@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.1.0
+
+- Fix Firefox compatibility
+- Fix selecting the add-on in the sidebar in Firefox
+
 ## 3.0.1
 
 - Fixed i18n thanks to an upstream bug that got fixed in Chrome 100

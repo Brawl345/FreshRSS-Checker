@@ -66,10 +66,10 @@ export const openFreshRssInSidebar = async () => {
     return;
   }
 
-  await chrome.sidebarAction.open();
   chrome.sidebarAction.setPanel({
     panel: url,
   });
+  await chrome.sidebarAction.open();
 };
 
 export const setupAlarm = async (interval) => {

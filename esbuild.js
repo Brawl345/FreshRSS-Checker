@@ -18,6 +18,7 @@ try {
 build({
   entryPoints: [
     resolve(__dirname, 'source', 'service-worker.js'),
+    resolve(__dirname, 'source', 'sidebar.js'),
     resolve(__dirname, 'source', 'options.js'),
   ],
   bundle: true,
