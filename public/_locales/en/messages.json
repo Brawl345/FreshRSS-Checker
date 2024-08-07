@@ -54,6 +54,18 @@
   "options_save": {
     "message": "Save settings"
   },
+  "options_removePermissions": {
+    "message": "Reset host permissions"
+  },
+  "options_hostsLabel": {
+    "message": "FreshRSS Checker can currently access the following addresses:"
+  },
+  "options_hostsPlaceholder": {
+    "message": "FreshRSS Checker can't currently access any addresses."
+  },
+  "options_permissionsCleared": {
+    "message": "Permissions cleared! Please remember to re-save your settings."
+  },
   "options_permissionNotGranted": {
     "message": "Saving failed because permission was not granted."
   },

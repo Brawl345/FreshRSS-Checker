@@ -20,6 +20,10 @@
         margin-bottom: 10px;
       }
 
+      form {
+          margin-bottom: 15px;
+      }
+
       input {
         height: 20px;
         flex: 0 0 200px;
@@ -104,12 +108,16 @@
       </label>
 
       <div>
-        <button id="save" class="browser-style" type="submit">
+        <button id="save" type="submit">
           __options_save__
         </button>
+        <button id="remove-permissions" class="float-right" type="button">__options_removePermissions__</button>
         <span id="message">__MSG__</span>
       </div>
     </form>
+
+    <label id="hosts-label" for="hosts">__options_hostsLabel__</label>
+    <textarea id="hosts" placeholder="__options_hostsPlaceholder__" rows="5" disabled></textarea>
 
     <script type="module" src="../build/options.js"></script>
   </body>

@@ -44,6 +44,18 @@
   "options_save": {
     "message": "Einstellungen speichern"
   },
+  "options_removePermissions": {
+    "message": "Host-Berechtigungen zurücksetzen"
+  },
+  "options_hostsLabel": {
+    "message": "FreshRSS Checker kann zurzeit auf die folgenden Adressen zugreifen:"
+  },
+  "options_hostsPlaceholder": {
+    "message": "FreshRSS Checker kann zurzeit auf keine Adressen zugreifen."
+  },
+  "options_permissionsCleared": {
+    "message": "Hosts-Berechtigungen zurückgesetzt! Bitte denke daran, deine Einstellungen erneut zu speichern."
+  },
   "options_permissionNotGranted": {
     "message": "Speichern fehlgeschlagen, da die nötige Berechtigung nicht erteilt wurde."
   },

@@ -20,6 +20,10 @@ const i18n = {
   intervalPlaceholder: chrome.i18n.getMessage('options_intervalPlaceholder'),
   sidebarLabel: chrome.i18n.getMessage('options_sidebarLabel'),
   save: chrome.i18n.getMessage('options_save'),
+  removePermissions: chrome.i18n.getMessage('options_removePermissions'),
+  hostsLabel: chrome.i18n.getMessage('options_hostsLabel'),
+  hostsPlaceholder: chrome.i18n.getMessage('options_hostsPlaceholder'),
+  permissionsCleared: chrome.i18n.getMessage('options_permissionsCleared'),
   permissionNotGranted: chrome.i18n.getMessage('options_permissionNotGranted'),
   saveSuccess: chrome.i18n.getMessage('options_saveSuccess'),
   saveFail: chrome.i18n.getMessage('options_saveFail'),
@@ -35,6 +39,9 @@ const HTML = {
   sidebarOption: document.querySelector('#sidebar-option'),
   save: document.querySelector('#save'),
   message: document.querySelector('#message'),
+  removePermissionsBtn: document.querySelector('#remove-permissions'),
+  hostsLabel: document.querySelector('#hosts-label'),
+  hosts: document.querySelector('#hosts'),
 };
 
 const clearMessage = () => {
@@ -63,6 +70,20 @@ const restoreOptions = async () => {
   }
 };
 
+const removeHostPermissions = async () => {
+  const all_permissions = await chrome.permissions.getAll();
+  if (all_permissions.origins.length > 0) {
+    await chrome.permissions.remove({ origins: [...all_permissions.origins] });
+  }
+  await reloadHostsTextField();
+  setMessage('success', i18n.permissionsCleared);
+};
+
+const reloadHostsTextField = async () => {
+  const all_permissions = await chrome.permissions.getAll();
+  HTML.hosts.value = all_permissions.origins.join('\n');
+};
+
 const saveOptions = async (event) => {
   event.preventDefault();
   const userOptions = {};
@@ -88,20 +109,13 @@ const saveOptions = async (event) => {
     }
   }
 
-  // Don't ask for host permission if "access to all websites" is checked
-  if (
-    !(await chrome.permissions.contains({
-      origins: ['http://*/*', 'https://*/*'],
-    }))
-  ) {
-    const grantedPermission = await chrome.permissions.request({
-      origins: [userOptions.url],
-    });
+  const grantedPermission = await chrome.permissions.request({
+    origins: [userOptions.url],
+  });
 
-    if (!grantedPermission) {
-      setMessage('failure', i18n.permissionNotGranted);
-      return;
-    }
+  if (!grantedPermission) {
+    setMessage('failure', i18n.permissionNotGranted);
+    return;
   }
 
   userOptions.apiKey = md5(`${userOptions.username}:${userOptions.password}`);
@@ -110,10 +124,12 @@ const saveOptions = async (event) => {
     await chrome.storage.sync.set(userOptions);
 
     // Firefox
-    if (window && window.localStorage) {
+    if (typeof window !== 'undefined' && window.localStorage) {
       localStorage.setItem('url', userOptions.url);
       localStorage.setItem('sidebar', userOptions.sidebar);
     }
+
+    await reloadHostsTextField();
 
     setMessage('success', i18n.saveSuccess);
   } catch (error) {
@@ -139,10 +155,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   HTML.save.textContent = i18n.save;
 
+  HTML.removePermissionsBtn.textContent = i18n.removePermissions;
+  HTML.hostsLabel.textContent = i18n.hostsLabel;
+  HTML.hosts.placeholder = i18n.hostsPlaceholder;
+
   if (sidebarSupported === false) {
     HTML.sidebarOption.style.display = 'none';
   }
 
   restoreOptions();
+  reloadHostsTextField();
   document.addEventListener('submit', saveOptions);
+  HTML.removePermissionsBtn.addEventListener('click', removeHostPermissions);
 });

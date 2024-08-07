@@ -85,7 +85,7 @@ export const setupAlarm = async (interval) => {
 
 export const onClickIcon = async () => {
   // Special handling for sidebar in Firefox
-  if (window && window.localStorage) {
+  if (typeof window !== 'undefined' && window.localStorage) {
     const sidebar = localStorage.getItem('sidebar');
     if (sidebar === 'true') {
       openFreshRssInSidebar();
@@ -126,7 +126,7 @@ export const onInstalled = async () => {
   // So we will save these options to localStorage, since reading them
   // asynchronously loses the "user interaction".
   // See https://bugzilla.mozilla.org/show_bug.cgi?id=1800401
-  if (window && window.localStorage) {
+  if (typeof window !== 'undefined' && window.localStorage) {
     const { url, sidebar } = await getOptions();
     localStorage.setItem('url', url);
     localStorage.setItem('sidebar', sidebar);

@@ -4,6 +4,7 @@
 
 - Fix Firefox compatibility
 - Fix selecting the add-on in the sidebar in Firefox
+- Host permissions are optional again
 
 ## 3.0.1
 
