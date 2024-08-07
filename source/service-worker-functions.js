@@ -60,7 +60,12 @@ const openFreshRssPage = async () => {
 };
 
 export const openFreshRssInSidebar = async () => {
-  const { url } = await getOptions();
+  const url = localStorage.getItem('url');
+  if (url === null || url === '') {
+    chrome.runtime.openOptionsPage();
+    return;
+  }
+
   await chrome.sidebarAction.open();
   chrome.sidebarAction.setPanel({
     panel: url,
@@ -79,6 +84,15 @@ export const setupAlarm = async (interval) => {
 };
 
 export const onClickIcon = async () => {
+  // Special handling for sidebar in Firefox
+  if (window && window.localStorage) {
+    const sidebar = localStorage.getItem('sidebar');
+    if (sidebar === 'true') {
+      openFreshRssInSidebar();
+      return;
+    }
+  }
+
   const { apiKey, url, sidebar } = await getOptions();
 
   if (apiKey === '' || url === '') {
@@ -93,7 +107,7 @@ export const onClickIcon = async () => {
   }
 };
 
-export const onInstalled = () => {
+export const onInstalled = async () => {
   chrome.contextMenus.create({
     id: MENU_ITEMS.checkNow,
     title: i18n.contextMenu_checkNow,
@@ -106,6 +120,16 @@ export const onInstalled = () => {
       title: i18n.contextMenu_sidebar,
       contexts: ['action'],
     });
+  }
+
+  // Firefox needs user action for opening the sidebar.
+  // So we will save these options to localStorage, since reading them
+  // asynchronously loses the "user interaction".
+  // See https://bugzilla.mozilla.org/show_bug.cgi?id=1800401
+  if (window && window.localStorage) {
+    const { url, sidebar } = await getOptions();
+    localStorage.setItem('url', url);
+    localStorage.setItem('sidebar', sidebar);
   }
 
   checkFeeds();

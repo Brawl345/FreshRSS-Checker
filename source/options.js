@@ -108,6 +108,13 @@ const saveOptions = async (event) => {
 
   try {
     await chrome.storage.sync.set(userOptions);
+
+    // Firefox
+    if (window && window.localStorage) {
+      localStorage.setItem('url', userOptions.url);
+      localStorage.setItem('sidebar', userOptions.sidebar);
+    }
+
     setMessage('success', i18n.saveSuccess);
   } catch (error) {
     console.error(error);
