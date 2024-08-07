@@ -54,8 +54,12 @@ export const checkFeeds = async function () {
   }
 };
 
-const openFreshRssPage = async () => {
+export const openFreshRssPage = async () => {
   const { url } = await getOptions();
+  if (url === '') {
+    chrome.runtime.openOptionsPage();
+    return;
+  }
   chrome.tabs.create({ url });
 };
 
@@ -107,7 +111,25 @@ export const onClickIcon = async () => {
   }
 };
 
+export const createOpenPageMenu = () => {
+  chrome.contextMenus.create({
+    id: MENU_ITEMS.openPage,
+    title: i18n.contextMenu_noSidebar,
+    contexts: ['action'],
+  });
+};
+
+export const createOpenSidebarMenu = () => {
+  chrome.contextMenus.create({
+    id: MENU_ITEMS.openSidebar,
+    title: i18n.contextMenu_sidebar,
+    contexts: ['action'],
+  });
+};
+
 export const onInstalled = async () => {
+  const { url, sidebar } = await getOptions();
+
   chrome.contextMenus.create({
     id: MENU_ITEMS.checkNow,
     title: i18n.contextMenu_checkNow,
@@ -115,11 +137,11 @@ export const onInstalled = async () => {
   });
 
   if (sidebarSupported) {
-    chrome.contextMenus.create({
-      id: MENU_ITEMS.openSidebar,
-      title: i18n.contextMenu_sidebar,
-      contexts: ['action'],
-    });
+    if (sidebar) {
+      createOpenPageMenu();
+    } else {
+      createOpenSidebarMenu();
+    }
   }
 
   // Firefox needs user action for opening the sidebar.
@@ -127,7 +149,6 @@ export const onInstalled = async () => {
   // asynchronously loses the "user interaction".
   // See https://bugzilla.mozilla.org/show_bug.cgi?id=1800401
   if (typeof window !== 'undefined' && window.localStorage) {
-    const { url, sidebar } = await getOptions();
     localStorage.setItem('url', url);
     localStorage.setItem('sidebar', sidebar);
   }
