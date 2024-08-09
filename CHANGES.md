@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.1
+
+- Fix English localization for a few strings
+
 ## 3.1.0
 
 - Ported to TypeScript

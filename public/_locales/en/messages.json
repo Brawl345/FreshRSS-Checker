@@ -25,7 +25,7 @@
     "description": "Title tag for the options page, normally not shown"
   },
   "options_freshRssUrlLabel": {
-    "message": "FreshRSS-URL"
+    "message": "FreshRSS URL"
   },
   "options_freshRssUrlPlaceholder": {
     "message": "Path to FreshRSS instance"

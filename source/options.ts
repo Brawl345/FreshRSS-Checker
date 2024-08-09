@@ -168,6 +168,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   HTML.urlLabel.textContent = i18n.urlLabel;
   HTML.url.placeholder = i18n.urlPlaceholder;
+  HTML.urlHelp.textContent = i18n.urlHelp;
   HTML.usernameLabel.textContent = i18n.usernameLabel;
   HTML.username.placeholder = i18n.usernamePlaceholder;
   HTML.passwordLabel.textContent = i18n.passwordLabel;
