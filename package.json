@@ -13,11 +13,9 @@
     "dev": "tsx build.ts",
     "start:chrome": "web-ext run -t chromium",
     "start:firefox": "web-ext run -t firefox-desktop",
-    "build": "cross-env NODE_ENV=\"production\" tsx build.ts && web-ext build --overwrite-dest",
+    "build": "cross-env NODE_ENV=\"production\" tsx build.ts",
     "lint": "prettier --check . && eslint --ignore-path .gitignore .",
     "format": "prettier --write .",
-    "web-ext-lint": "cross-env NODE_ENV=\"production\" tsx build.ts && web-ext lint",
-    "global:check-dependencies": "npm-check --skip-unused",
     "web-ext:lint": "npm run build && web-ext lint",
     "web-ext:build": "npm run build && web-ext build --overwrite-dest",
     "web-ext:upload": "npm run web-ext:build && web-ext sign --channel=listed"
