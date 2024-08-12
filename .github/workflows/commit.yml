@@ -30,7 +30,11 @@ jobs:
         run: npm ci
 
       - name: Lint
-        run: npm run lint
+        run: |
+          npm run lint:types
+          npm run lint:code
+          npm run lint:style
+          npm run lint:web-ext
 
       - name: Build
         run: npm run build
@@ -38,6 +42,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: FreshRSS-Checker-${{github.sha}}.zip
+          name: FreshRSS-Checker-${{github.sha}}
           path: public/*
           if-no-files-found: error

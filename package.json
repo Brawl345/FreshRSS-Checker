@@ -11,30 +11,39 @@
   "type": "module",
   "scripts": {
     "dev": "tsx build.ts",
+    "build": "cross-env NODE_ENV=\"production\" tsx build.ts",
     "start:chrome": "web-ext run -t chromium",
     "start:firefox": "web-ext run -t firefox-desktop",
-    "build": "cross-env NODE_ENV=\"production\" tsx build.ts",
-    "lint": "prettier --check . && eslint --ignore-path .gitignore .",
-    "format": "prettier --write .",
-    "web-ext:lint": "npm run build && web-ext lint",
+    "start:firefox-android": "web-ext run -t firefox-android",
+    "lint:types": "tsc --project tsconfig.json",
+    "lint:code": "eslint .",
+    "lint:style": "prettier --check .",
+    "lint:web-ext": "npm run build && web-ext lint",
     "web-ext:build": "npm run build && web-ext build --overwrite-dest",
     "web-ext:upload": "npm run web-ext:build && web-ext sign --channel=listed"
   },
   "webExt": {
-    "sourceDir": "./public/"
+    "sourceDir": "./public/",
+    "run": {
+      "startUrl": [
+        "about:debugging#/runtime/this-firefox"
+      ]
+    }
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.269",
-    "@typescript-eslint/eslint-plugin": "6.19.0",
-    "@typescript-eslint/parser": "6.19.0",
+    "@eslint/js": "9.9.0",
+    "@types/chrome": "0.0.269",
+    "@types/eslint__js": "8.42.3",
     "cross-env": "7.0.3",
-    "eslint": "8.56.0",
+    "esbuild": "0.23.0",
+    "eslint": "9.9.0",
     "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-unicorn": "50.0.1",
-    "esbuild": "0.16.0",
+    "eslint-plugin-unicorn": "55.0.0",
+    "globals": "15.9.0",
     "prettier": "3.3.3",
-    "tsx": "4.16.5",
+    "tsx": "4.17.0",
     "typescript": "5.5.4",
+    "typescript-eslint": "8.0.1",
     "web-ext": "8.2.0"
   },
   "dependencies": {
