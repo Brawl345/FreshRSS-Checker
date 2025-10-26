@@ -1,4 +1,4 @@
-import { Options } from './constants';
+import type { Options } from './constants';
 
 export const defaults: Options = Object.freeze({
   url: '',

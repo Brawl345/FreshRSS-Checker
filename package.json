@@ -13,11 +13,9 @@
     "dev": "tsx build.ts",
     "build": "cross-env NODE_ENV=\"production\" tsx build.ts",
     "start:chrome": "web-ext run -t chromium",
-    "start:firefox": "web-ext run -t firefox-desktop",
-    "start:firefox-android": "web-ext run -t firefox-android",
+    "start:firefox": "web-ext run --no-reload -t firefox-desktop",
     "lint:types": "tsc --project tsconfig.json",
-    "lint:code": "eslint .",
-    "lint:style": "prettier --check .",
+    "lint:code": "biome lint",
     "lint:web-ext": "npm run build && web-ext lint",
     "web-ext:build": "npm run build && web-ext build --overwrite-dest",
     "web-ext:upload": "npm run web-ext:build && web-ext sign --channel=listed"
@@ -31,20 +29,13 @@
     }
   },
   "devDependencies": {
-    "@eslint/js": "9.9.0",
-    "@types/chrome": "0.0.269",
-    "@types/eslint__js": "8.42.3",
-    "cross-env": "7.0.3",
-    "esbuild": "0.23.0",
-    "eslint": "9.9.0",
-    "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-unicorn": "55.0.0",
-    "globals": "15.9.0",
-    "prettier": "3.3.3",
-    "tsx": "4.17.0",
-    "typescript": "5.5.4",
-    "typescript-eslint": "8.0.1",
-    "web-ext": "8.2.0"
+    "@biomejs/biome": "2.3.0",
+    "@types/chrome": "0.1.24",
+    "cross-env": "10.1.0",
+    "esbuild": "0.25.11",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3",
+    "web-ext": "9.1.0"
   },
   "dependencies": {
     "md5": "2.3.0"

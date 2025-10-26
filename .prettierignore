@@ -1,7 +1,0 @@
-node_modules
-package-lock.json
-pnpm-lock.yaml
-yarn.lock
-public/build
-*.html
-*.json

@@ -1,6 +1,6 @@
-import { defaults, getOptions } from './storage.js';
 import md5 from 'md5';
-import { LocalStorageKey, MessageVariant, Options, supportsSidebar } from './constants';
+import { LocalStorageKey, MessageVariant, type Options, supportsSidebar } from './constants';
+import { defaults, getOptions } from './storage.js';
 
 const i18n = {
   title: chrome.i18n.getMessage('options_title'),
@@ -116,7 +116,7 @@ const saveOptions = async (event: SubmitEvent) => {
         }
         case 'number': {
           // @ts-expect-error don't bother
-          userOptions[key as keyof Options] = Number.parseInt(htmlElement.value);
+          userOptions[key as keyof Options] = Number.parseInt(htmlElement.value, 10);
           break;
         }
         case 'url': {

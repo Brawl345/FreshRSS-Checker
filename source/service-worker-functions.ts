@@ -1,5 +1,12 @@
+import {
+  ALARM_ID,
+  BadgeColor,
+  type FreshRSSApiResponse,
+  LocalStorageKey,
+  MenuItem,
+  supportsSidebar,
+} from './constants';
 import { getOptions } from './storage.js';
-import { ALARM_ID, BadgeColor, FreshRSSApiResponse, LocalStorageKey, MenuItem, supportsSidebar } from './constants';
 
 const i18n = {
   contextMenu_checkNow: chrome.i18n.getMessage('contextMenu_checkNow'),
@@ -13,7 +20,7 @@ const setBadge = (color: BadgeColor, text: string) => {
   chrome.action.setBadgeText({ text: text });
 };
 
-export const checkFeeds = async function () {
+export const checkFeeds = async () => {
   const { apiKey, url } = await getOptions();
   if (apiKey === '' || url === '') {
     setBadge(BadgeColor.Warning, '!');

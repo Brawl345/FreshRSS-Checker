@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import { context } from 'esbuild';
-import { fileURLToPath } from 'node:url';
-import path from 'node:path';
 import { rmSync } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { context } from 'esbuild';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,7 +26,7 @@ const ctx = await context({
   format: 'esm',
   splitting: true,
   sourcemap: isProduction ? false : 'inline',
-  target: ['chrome120', 'firefox120'],
+  target: ['chrome140', 'firefox142'],
   logLevel: 'info',
   legalComments: 'none',
   outdir: path.resolve(__dirname, 'public', 'build'),
