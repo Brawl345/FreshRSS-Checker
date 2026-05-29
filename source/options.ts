@@ -132,8 +132,13 @@ const saveOptions = async (event: SubmitEvent) => {
     }
   }
 
+  // Firefox ignores match patterns that contain a port number
+  // (https://bugzil.la/1362809), so we request the host on all ports/paths.
+  const parsedUrl = new URL(userOptions.url);
+  const originPattern = `${parsedUrl.protocol}//${parsedUrl.hostname}/*`;
+
   const grantedPermission = await chrome.permissions.request({
-    origins: [userOptions.url],
+    origins: [originPattern],
   });
 
   if (!grantedPermission) {

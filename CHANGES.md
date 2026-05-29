@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Fix instances using a custom port (e.g. local IPs) not working in Firefox
+
 ## 3.1.1
 
 - Fix English localization for a few strings
