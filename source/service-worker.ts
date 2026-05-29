@@ -37,7 +37,7 @@ chrome.contextMenus.onClicked.addListener(({ menuItemId }) => {
 
 chrome.storage.sync.onChanged.addListener(({ apiKey, interval, url, sidebar }) => {
   if (interval) {
-    setupAlarm(interval.newValue);
+    setupAlarm(interval.newValue as number);
   }
   if (apiKey || url) {
     checkFeeds();
