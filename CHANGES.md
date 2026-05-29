@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 3.1.2
 
 - Fix instances using a custom port (e.g. local IPs) not working in Firefox
 
